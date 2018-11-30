@@ -2,6 +2,7 @@ package scheduler
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/docker/swarmkit/api"
@@ -48,6 +49,7 @@ type Scheduler struct {
 
 // New creates a new scheduler.
 func New(store *store.MemoryStore) *Scheduler {
+	fmt.Println("test - Creating Schduler for this swarm with store %+v", store)
 	return &Scheduler{
 		store:                   store,
 		unassignedTasks:         make(map[string]*api.Task),
@@ -62,6 +64,7 @@ func New(store *store.MemoryStore) *Scheduler {
 
 func (s *Scheduler) setupTasksList(tx store.ReadTx) error {
 	tasks, err := store.FindTasks(tx, store.All)
+	fmt.Printf("test - Scheduler is gettting tasks from its store", tasks)
 	if err != nil {
 		return err
 	}
@@ -214,6 +217,8 @@ func (s *Scheduler) createTask(ctx context.Context, t *api.Task) bool {
 	if t.Status.State < api.TaskStatePending || t.Status.State > api.TaskStateRunning {
 		return false
 	}
+
+	fmt.Printf("test -Task is creating %#v", t)
 
 	s.allTasks[t.ID] = t
 	if t.NodeID == "" {

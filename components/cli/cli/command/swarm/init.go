@@ -61,7 +61,7 @@ func newInitCommand(dockerCli command.Cli) *cobra.Command {
 
 func runInit(dockerCli command.Cli, flags *pflag.FlagSet, opts initOptions) error {
 	var defaultAddrPool []string
-
+	fmt.Fprintf(dockerCli.Out(), "docker swarm init here")
 	client := dockerCli.Client()
 	ctx := context.Background()
 

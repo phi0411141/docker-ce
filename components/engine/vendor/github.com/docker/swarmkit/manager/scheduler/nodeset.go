@@ -3,6 +3,7 @@ package scheduler
 import (
 	"container/heap"
 	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/docker/swarmkit/api"
@@ -97,6 +98,7 @@ func (ns *nodeSet) tree(serviceID string, preferences []*api.PlacementPreference
 				next = &decisionTree{}
 				tree.next[value] = next
 			}
+			fmt.Println("test- decisition tree %#v", tree)
 			tree = next
 		}
 
